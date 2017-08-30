@@ -42,6 +42,7 @@ setup(
     name="hcareport",
     description="Reporting for Studies in the Human Cell Atlas",
     packages=["hcareport"],
+    package_data={'hcareport': ['notebooks/*']},
     namespace_packages=[],
     zip_safe=False,
     url="https://github.com/david4096/hca-report",

@@ -17,6 +17,9 @@ resulting files are stored with the study.
 import tempfile
 import shutil
 import argparse
+import os
+
+import nbconvert
 
 def run_report(study_id, path):
     """
@@ -27,9 +30,13 @@ def run_report(study_id, path):
     :return:
     """
     # Call to system or Jupyter API to run notebooks
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    notebook_path = os.path.join(cwd, 'notebooks', 'python.ipynb')
+    notebook = nbconvert.exporters.export(nbconvert.exporters.NotebookExporter,
+                                notebook_path)
 
     # Place results in temporary file location
-
+    print(notebook)
     # Upload to s3
 
     return
