@@ -19,7 +19,10 @@ import shutil
 import argparse
 import os
 
-import nbconvert
+import nbformat
+
+from nbconvert.preprocessors import ExecutePreprocessor
+
 
 def run_report(study_id, path):
     """
@@ -32,11 +35,15 @@ def run_report(study_id, path):
     # Call to system or Jupyter API to run notebooks
     cwd = os.path.dirname(os.path.realpath(__file__))
     notebook_path = os.path.join(cwd, 'notebooks', 'python.ipynb')
-    notebook = nbconvert.exporters.export(nbconvert.exporters.NotebookExporter,
-                                notebook_path)
-
+    with open(notebook_path) as f:
+        nb = nbformat.read(f, as_version=4)
+    ep = ExecutePreprocessor(timeout=1800)
+    ep.preprocess(nb, {'metadata': {'path': path}})
+    with open(os.path.join(path, 'python.ipynb'), mode='wt') as f:
+        nbformat.write(nb, f)
     # Place results in temporary file location
-    print(notebook)
+    with open(os.path.join(path, 'python.ipynb'), mode='r') as f:
+        print(f.readlines())
     # Upload to s3
 
     return
