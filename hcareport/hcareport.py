@@ -24,7 +24,7 @@ import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
 
 
-def run_report(study_id, path):
+def run_report(bucket_id, path):
     """
     Runs the report notebook located in ../notebooks and puts it in a local
     path.
