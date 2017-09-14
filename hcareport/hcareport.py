@@ -43,7 +43,8 @@ def run_report(bucket_id, path):
         nbformat.write(nb, f)
     # Place results in temporary file location
     with open(os.path.join(path, 'python.ipynb'), mode='r') as f:
-        print(f.readlines())
+        with open('output.ipynb', mode='w') as output:
+            output.writelines(f.readlines())
     # Upload to s3
 
     return
